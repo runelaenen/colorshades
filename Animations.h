@@ -195,14 +195,14 @@ void matrix() {
   rain();
 }
 
+
 void textscroll() {
-  static uint16_t pos;
+  static int16_t pos;
   static int textLength;
   static char* textNow;
-
   if(effectLoaded == false) {
     effectLoaded = true;
-    effectSpeed = 200;
+    effectSpeed = 100;
     effectHue = 96; // 180 = blue 
     pos = 0;
     
@@ -211,19 +211,23 @@ void textscroll() {
   }
   clean();
 
-  if(pos >= textLength) pos = 0;
+ for(int lett = 0; lett < textLength; lett++){
 
-  byte* letter = charToFont(textNow[pos]);
-
-  for(int i = 0; i < 5; i++) {
-    for(int j = 0; j < 5; j++) {
-      if(bitRead(letter[i], j+3) == 1) {
-        leds[XY2I(5-j, i)] = CRGB::Red;
+    byte* letter = charToFont(textNow[lett]);
+  
+    for(int i = 0; i < 5; i++) {
+      for(int j = 0; j < 5; j++) {
+        if(bitRead(letter[i], j+3) == 1) {
+          leds[XY2I((lett*6) + 5-j - pos, i)] = CRGB::Red;
+        }
       }
-    }
-  }
+    }   
+     
+ }
   
   pos ++;
+
+  if(pos > (textLength*6)) pos = -MATRIX_WIDTH+1;
 }
 
 /* Type to list animation-functions */

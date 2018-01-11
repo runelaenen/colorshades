@@ -13,7 +13,7 @@ uint8_t XY2I(uint8_t x, uint8_t y){
 
   uint8_t index = x + (y * MATRIX_WIDTH);
 
-  if(index>80){
+  if(index>80 || x >= MATRIX_WIDTH || y >= MATRIX_HEIGHT){
     return 70;
   }
   

@@ -1,6 +1,12 @@
 void sendCurrentEffect() {
   client.publish("/info/effectCurrent", String(effectCurrent));
 }
+void sendCurrentText() {
+  client.publish("/info/text", String(textToSay));
+}
+void sendCurrentPot() {
+  client.publish("/potmeter", String(curPotVal));
+}
 
 void changeCurrentEffect(int to) {
   if(to >= numberOfAnimations || to < 0){
@@ -13,6 +19,12 @@ void changeCurrentEffect(int to) {
   sendCurrentEffect();
 }
 
+void changeCurrentText(String message) {
+  message.toCharArray(textToSay, message.length()+1);
+  sendCurrentText();
+  effectLoaded = false;
+}
+
 void handlePotmeter() {
   uint8_t potVal = analogRead(PIN_POT)/16;
   uint8_t diff = abs(curPotVal - potVal);
@@ -21,7 +33,7 @@ void handlePotmeter() {
     #if CONFIG_DEBUG 
     Serial.println(potVal);
     #endif
-    client.publish("/potmeter", String(potVal));
+    sendCurrentPot();
     FastLED.setBrightness(potVal);
   
   }
