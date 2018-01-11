@@ -195,24 +195,25 @@ void matrix() {
   rain();
 }
 
-
 void textscroll() {
   static uint16_t pos;
   static int textLength;
+  static char* textNow;
+
   if(effectLoaded == false) {
     effectLoaded = true;
     effectSpeed = 200;
     effectHue = 96; // 180 = blue 
     pos = 0;
     
-    textToSay = "Rune Laenen ";
     textLength = strlen(textToSay);
+    textNow = textToSay;
   }
   clean();
 
   if(pos >= textLength) pos = 0;
 
-  byte* letter = charToFont(textToSay[pos]);
+  byte* letter = charToFont(textNow[pos]);
 
   for(int i = 0; i < 5; i++) {
     for(int j = 0; j < 5; j++) {

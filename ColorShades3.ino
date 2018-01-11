@@ -153,9 +153,12 @@ void messageReceived(String& topic, String& message) {
     changeCurrentEffect(message.toInt());
   }else if(topic.equals("/effect/hue")){
     effectHue = message.toInt();
-  }else if(topic.equals("/effect/speed")){
+  } else if(topic.equals("/effect/speed")){
     effectSpeed = message.toInt();
-  }else if(topic.equals("/getInfo/effectCurrent")){
+  } else if(topic.equals("/effect/text")){
+    message.toCharArray(textToSay, message.length()+1);
+    effectLoaded = false;
+  } else if(topic.equals("/getInfo/effectCurrent")){
     sendCurrentEffect();
   } else {
     Serial.print("MQTT on unknown topic: ");
