@@ -59,7 +59,6 @@ void hearts(){
 
 /* FastLED Example rewritten for colorshades, original: https://pastebin.com/yAgKs0Ay */
 
-
 void antialias(){
 
   if (effectLoaded == false) {
@@ -196,10 +195,40 @@ void matrix() {
   rain();
 }
 
+
+void textscroll() {
+  static uint16_t pos;
+  static int textLength;
+  if(effectLoaded == false) {
+    effectLoaded = true;
+    effectSpeed = 200;
+    effectHue = 96; // 180 = blue 
+    pos = 0;
+    
+    textToSay = "Rune Laenen ";
+    textLength = strlen(textToSay);
+  }
+  clean();
+
+  if(pos >= textLength) pos = 0;
+
+  byte* letter = charToFont(textToSay[pos]);
+
+  for(int i = 0; i < 5; i++) {
+    for(int j = 0; j < 5; j++) {
+      if(bitRead(letter[i], j+3) == 1) {
+        leds[XY2I(5-j, i)] = CRGB::Red;
+      }
+    }
+  }
+  
+  pos ++;
+}
+
 /* Type to list animation-functions */
 typedef void (*Animation)();
 
-int numberOfAnimations = 6;
+int numberOfAnimations = 7;
 
 Animation animations[] = {
   hearts,
@@ -207,6 +236,7 @@ Animation animations[] = {
   rainbow,
   noise,
   rain,
-  matrix
+  matrix,
+  textscroll
 };
 

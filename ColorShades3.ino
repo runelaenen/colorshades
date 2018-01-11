@@ -25,6 +25,7 @@ MQTTClient client;
 #include <FastLED.h>
 
 #include "Global.h"
+#include "Font.h"
 #include "Matrix.h"
 #include "Animations.h"
 #include "Services.h"

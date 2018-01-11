@@ -16,4 +16,4 @@ bool effectLoaded = false; // Keep track wether global vars have yet been set by
 uint8_t effectCurrent = 2;
 uint8_t effectSpeed = 250;
 uint8_t effectHue = 0;
-
+char* textToSay = "";
